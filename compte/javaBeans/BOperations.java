@@ -123,13 +123,13 @@ public class BOperations {
 	 */
 	public void ouvrirConnexion() throws TraitementException {
 		String name = "localhost";
-		String bddName = "compte";
-		String port = "55000";
+		String bddName = "jee_db";
+		String port = "3306";
 		
 		try {
 			connection = DriverManager.getConnection(
-					"jdbc:postgresql://"+name+":"+port+"/"+bddName,
-					"postgres", "postgrespw");
+					"jdbc:mysql://"+name+":"+port+"/"+bddName,
+					"root", "root");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -206,13 +206,14 @@ public class BOperations {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 			DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 			Date date = new Date();
-			String addOp = "INSERT INTO OPERATION(NOCOMPTE, DATE, HEURE, OP, VALEUR) VALUES('" + noCompte + "','" + dateFormat.format(date).toString() + "','" + timeFormat.format(date).toString() + "','" + op + "'," + valeur + ");";
+			String addOp = "INSERT INTO OPERATIONS(NOCOMPTE, DATE, HEURE, OP, VALEUR) VALUES('" + noCompte + "','" + dateFormat.format(date).toString() + "','" + timeFormat.format(date).toString() + "','" + op + "'," + valeur + ");";
 			
 			try {
 				stmt.executeUpdate(updateCompte);
 				stmt.executeUpdate(addOp);
 				connection.commit();
 			} catch (Exception e) {
+				System.out.println(e.getMessage());
 				connection.rollback();
 			}
 		} catch (SQLException e) {
@@ -238,15 +239,18 @@ public class BOperations {
 		
 		try(Statement stmt = connection.createStatement()) {
 			String consult = "SELECT * "
-					+ "FROM OPERATION AS O "
+					+ "FROM OPERATIONS AS O "
 					+ "WHERE O.NOCOMPTE='" + noCompte + "' "
 					+ "AND O.DATE BETWEEN '" + dateInf + "' AND '" + dateSup + "';";
+			
 			ResultSet rs = stmt.executeQuery(consult);
+			
 			while (rs.next()) {
 			    operationsParDates.add(rs.getString("DATE") + " " + rs.getString("OP") + " " + rs.getBigDecimal("VALEUR"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			System.out.println("AAAAAAAAAAA");
 			throw new TraitementException("21");
 		}
 	}

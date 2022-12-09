@@ -1,7 +1,6 @@
 package servlets;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -100,6 +99,35 @@ public class SOperations extends HttpServlet {
 				request.setAttribute("error", e.getMessage());
 				
 				this.getServletContext().getRequestDispatcher("/JOperations.jsp").forward(request, response);
+				return;
+			}
+		}
+		case "demande": {
+			String jInit = request.getParameter("jInit");
+			String mInit = request.getParameter("mInit");
+			String aInit = request.getParameter("aInit");
+			String jFinal = request.getParameter("jFinal");
+			String mFinal = request.getParameter("mFinal");
+			String aFinal = request.getParameter("aFinal");
+			
+			try {
+			
+				BOperations operation = (BOperations) request.getSession().getAttribute("BOperation");
+				operation.ouvrirConnexion();
+				
+				operation.setDateInf(aInit + "/" + mInit + "/" + jInit); // yyyy/MM/dd
+				operation.setDateSup(aFinal + "/" + mFinal + "/" + jFinal); // yyyy/MM/dd
+				
+				operation.listerParDates();
+				
+				request.getSession().setAttribute("BOperation", operation);
+				
+				this.getServletContext().getRequestDispatcher("/JListOperations.jsp").forward(request, response);
+				operation.fermerConnexion();
+				return;
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e.getMessage());
 				return;
 			}
 		}

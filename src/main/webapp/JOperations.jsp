@@ -43,7 +43,7 @@ table, td, th {
         		</tr>
     		</tbody>
 		</table>
-		<form action="http://localhost:8080/BanqueWeb2/GestionOperations" method="post">
+		<form action="http://localhost:8080/BanqueWeb/GestionOperations" method="post">
 		<table>
     		<thead>
         		<tr>
@@ -102,7 +102,7 @@ table, td, th {
 				<div style="color: blue;">Ancien solde: <%= obj.getAncienSolde() %></div>
 				<div style="color: blue;">Nouveau solde: <%= obj.getNouveauSolde() %></div>
 		<% } %>
-		<form action="http://localhost:8080/BanqueWeb2/GestionOperations" method="post">
+		<form action="http://localhost:8080/BanqueWeb/GestionOperations" method="post">
 		<table>
     		<thead>
     			<tr>
