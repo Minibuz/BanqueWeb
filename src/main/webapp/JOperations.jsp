@@ -53,7 +53,7 @@ table, td, th {
     		</thead>
     		<tbody>
         		<tr>
-        			<% if (request.getAttribute("error") != null) { %>
+        			<% if (request.getSession().getAttribute("errorTraiter") != null) { %>
         				<% if (obj.getOp() == "+") { %>
             				<td colspan="2">(+)<input type="radio" id="plus" name="op" value="+" checked></td>
 							<td colspan="2"><input type="radio" id="moins" name="op" value="-">(-)</td>
@@ -95,8 +95,8 @@ table, td, th {
     		</tbody>
 		</table>
 		</form>
-		<% if(request.getAttribute("error") != null) {%>
-				<%= request.getAttribute("error") %>
+		<% if(request.getSession().getAttribute("errorTraiter") != null) {%>
+				<%= request.getSession().getAttribute("errorTraiter") %>
 		<% } else if (obj.getOp() != null ){ %>
 				<div style="color: blue;">Opération réalisée: <%= obj.getOp() %> <%= obj.getValeur() %></div>
 				<div style="color: blue;">Ancien solde: <%= obj.getAncienSolde() %></div>
@@ -182,8 +182,8 @@ table, td, th {
     		</tbody>
 		</table>
 		</form>
-		<% if(request.getAttribute("error") != null) {%>
-				<%= request.getAttribute("error") %>
+		<% if(request.getSession().getAttribute("errorDemande") != null) {%>
+				<%= request.getSession().getAttribute("errorDemande") %>
 		<% } else if (obj.getOp() != null ){ %>
 		<% } %>
 	</main>

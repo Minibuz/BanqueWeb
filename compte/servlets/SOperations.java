@@ -62,12 +62,15 @@ public class SOperations extends HttpServlet {
 				
 				request.getSession().setAttribute("BOperation", operation);
 				
+				request.getSession().setAttribute("errorConsulter", null);
+				request.getSession().setAttribute("noCompte", null);
+				
 				this.getServletContext().getRequestDispatcher("/JOperations.jsp").forward(request, response);
 				operation.fermerConnexion();
 				return;
 			} catch (TraitementException e) {
-				request.setAttribute("error", e.getMessage());
-				request.setAttribute("noCompte", noCompte);
+				request.getSession().setAttribute("errorConsulter", e.getMessage());
+				request.getSession().setAttribute("noCompte", noCompte);
 				this.getServletContext().getRequestDispatcher("/JSaisieNoDeCompte.jsp").forward(request, response);
 				return;
 			}
@@ -91,12 +94,13 @@ public class SOperations extends HttpServlet {
 				operation.traiter();
 				
 				request.getSession().setAttribute("BOperation", operation);
+				request.getSession().setAttribute("errorTraiter", null);
 				
 				this.getServletContext().getRequestDispatcher("/JOperations.jsp").forward(request, response);
 				operation.fermerConnexion();
 				return;
 			} catch (TraitementException e) {
-				request.setAttribute("error", e.getMessage());
+				request.getSession().setAttribute("errorTraiter", e.getMessage());
 				
 				this.getServletContext().getRequestDispatcher("/JOperations.jsp").forward(request, response);
 				return;
@@ -131,6 +135,13 @@ public class SOperations extends HttpServlet {
 				return;
 			}
 		}
+		case "return": {
+			this.getServletContext().getRequestDispatcher("/JOperations.jsp").forward(request, response);
+			
+			// TODO : Back work properly
+			
+			return;
+		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + where);
 		}
@@ -155,7 +166,8 @@ public class SOperations extends HttpServlet {
 			new BigDecimal(valeur);
 		} catch(NumberFormatException e) {
 			throw new TraitementException("25");
-		}
-		
+		}	
 	}
+	
+	private void verifDate()
 }

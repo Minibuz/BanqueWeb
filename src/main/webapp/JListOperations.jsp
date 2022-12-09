@@ -54,8 +54,8 @@
 			<div> Il n'y a aucun résultat </div>
 		<% } %>
 		
-		<form action="http://localhost:8080/BanqueWeb/GestionOperations">
-    		<input type="submit" value="Return" />
+		<form action="http://localhost:8080/BanqueWeb/GestionOperations" method="post">
+    		<input type="submit" name="button" value="return">
 		</form>
 </body>
 </html>
