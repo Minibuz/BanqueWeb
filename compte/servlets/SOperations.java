@@ -146,6 +146,7 @@ public class SOperations extends HttpServlet {
 				}
 				
 				request.getSession().setAttribute("BOperation", operation);
+				request.getSession().setAttribute("errorDate", null);
 				
 				this.getServletContext().getRequestDispatcher("/JListOperations.jsp").forward(request, response);
 				operation.fermerConnexion();
@@ -162,6 +163,12 @@ public class SOperations extends HttpServlet {
 			// TODO : Back work properly
 			
 			return;
+		}
+		case "end": {
+			request.getSession().removeAttribute("errorDate");
+			request.getSession().removeAttribute("errorTraiter");
+			request.getSession().removeAttribute("BOperation");
+			this.getServletContext().getRequestDispatcher("/JSaisieNoDeCompte.jsp").forward(request, response);
 		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + where);

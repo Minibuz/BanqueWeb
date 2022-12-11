@@ -188,6 +188,9 @@ table, td, th {
 		<% if(request.getSession().getAttribute("errorDate") != null) {%>
 				<%= request.getSession().getAttribute("errorDate") %>
 		<% } %>
+		<form action="http://localhost:8080/BanqueWeb/GestionOperations" method="post">
+    		<input type="submit" name="button" value="end">
+		</form>
 	</main>
 	
 	<footer>
