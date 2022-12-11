@@ -12,6 +12,8 @@ public class MessagesDErreurs {
 		put("24", "Opération refusée, début demandé supérieur au crédit du compte");
 		put("25", "La valeur doit être numérique");
 		put("26", "Aucune valeur n'a été saisie");
+		put("31", "La date initiale doit être inférieur à la date finale");
+		put("32", "Il n'y a eu aucune opération effectuée durant cette période");
 	}};
 	
 	public static String getMessageDerreur(String numeroMessage) {

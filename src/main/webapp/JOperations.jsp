@@ -184,7 +184,9 @@ table, td, th {
 		</form>
 		<% if(request.getSession().getAttribute("errorDemande") != null) {%>
 				<%= request.getSession().getAttribute("errorDemande") %>
-		<% } else if (obj.getOp() != null ){ %>
+		<% } %>
+		<% if(request.getSession().getAttribute("errorDate") != null) {%>
+				<%= request.getSession().getAttribute("errorDate") %>
 		<% } %>
 	</main>
 	

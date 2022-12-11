@@ -108,10 +108,22 @@ public class SOperations extends HttpServlet {
 		}
 		case "demande": {
 			String jInit = request.getParameter("jInit");
+			if(jInit.startsWith(" 0 + ")) {
+				jInit = jInit.substring(5);
+			}
 			String mInit = request.getParameter("mInit");
+			if(mInit.startsWith(" 0 + ")) {
+				mInit = mInit.substring(5);
+			}
 			String aInit = request.getParameter("aInit");
 			String jFinal = request.getParameter("jFinal");
+			if(jFinal.startsWith(" 0 + ")) {
+				jFinal = jFinal.substring(5);
+			}
 			String mFinal = request.getParameter("mFinal");
+			if(mFinal.startsWith(" 0 + ")) {
+				mFinal = mFinal.substring(5);
+			}
 			String aFinal = request.getParameter("aFinal");
 			
 			try {
@@ -119,10 +131,19 @@ public class SOperations extends HttpServlet {
 				BOperations operation = (BOperations) request.getSession().getAttribute("BOperation");
 				operation.ouvrirConnexion();
 				
-				operation.setDateInf(aInit + "/" + mInit + "/" + jInit); // yyyy/MM/dd
-				operation.setDateSup(aFinal + "/" + mFinal + "/" + jFinal); // yyyy/MM/dd
+				String dateInit = aInit + "/" + mInit + "/" + jInit;
+				String dateFinal = aFinal + "/" + mFinal + "/" + jFinal;
+				
+				verifDate(aInit, mInit, jInit, aFinal, mFinal, jFinal);
+				
+				operation.setDateInf(dateInit); // yyyy/MM/dd
+				operation.setDateSup(dateFinal); // yyyy/MM/dd
 				
 				operation.listerParDates();
+				
+				if(operation.getOperationsParDates().isEmpty()) {
+					throw new TraitementException("32");
+				}
 				
 				request.getSession().setAttribute("BOperation", operation);
 				
@@ -130,8 +151,8 @@ public class SOperations extends HttpServlet {
 				operation.fermerConnexion();
 				return;
 			} catch (Exception e) {
-				// TODO: handle exception
-				System.out.println(e.getMessage());
+				request.getSession().setAttribute("errorDate", e.getMessage());
+				this.getServletContext().getRequestDispatcher("/JOperations.jsp").forward(request, response);
 				return;
 			}
 		}
@@ -157,8 +178,6 @@ public class SOperations extends HttpServlet {
 	}
 	
 	private void verifValeur(String valeur) throws TraitementException {
-		System.out.println(valeur);
-		
 		if(".".equals(valeur)) {
 			throw new TraitementException("26");
 		}
@@ -169,5 +188,23 @@ public class SOperations extends HttpServlet {
 		}	
 	}
 	
-	private void verifDate()
+	private void verifDate(String aInit, String mInit, String jInit, String aFinal, String mFinal, String jFinal) throws TraitementException {
+		if(Integer.parseInt(aFinal) < Integer.parseInt(aInit)) {
+			throw new TraitementException("31");
+		}
+		if(Integer.parseInt(aFinal) > Integer.parseInt(aInit)) {
+			return;
+		}
+		
+		if(Integer.parseInt(mFinal) < Integer.parseInt(mInit)) {
+			throw new TraitementException("31");
+		}
+		if(Integer.parseInt(mFinal) > Integer.parseInt(mInit)) {
+			return;
+		}
+		
+		if(Integer.parseInt(jFinal) < Integer.parseInt(jInit)) {
+			throw new TraitementException("31");
+		}
+	}
 }

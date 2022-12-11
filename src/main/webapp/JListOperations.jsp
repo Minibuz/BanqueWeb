@@ -30,7 +30,6 @@
     		</tbody>
 		</table>
 		
-		<% if (!obj.getOperationsParDates().isEmpty()) { %>
 		<table>
 			<thead>
 				<th>Date</th>
@@ -50,9 +49,6 @@
 				</tr>
 			<% } %>
 		</table>
-		<% } else { %>
-			<div> Il n'y a aucun résultat </div>
-		<% } %>
 		
 		<form action="http://localhost:8080/BanqueWeb/GestionOperations" method="post">
     		<input type="submit" name="button" value="return">
