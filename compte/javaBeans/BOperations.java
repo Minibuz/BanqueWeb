@@ -44,41 +44,85 @@ public class BOperations {
 	private Connection connection;
 	
 	
-	/*
-	 * 
-	 * 			Getters/Setters
-	 * 
+	/**
+	 * Get the account number
+	 * @return the account number
 	 */
 	public String getNoDeCompte() {
 		return noCompte;
 	}
+	/**
+	 * Set the given value as account number
+	 * @param noCompte
+	 */
 	public void setNoDeCompte(String noCompte) {
 		this.noCompte = noCompte;
 	}
+	/**
+	 * Get the account name
+	 * @return the account name
+	 */
 	public String getNom() {
 		return nom;
 	}
+	/**
+	 * Get the account first name
+	 * @return the account first name
+	 */
 	public String getPrenom() {
 		return prenom;
 	}
+	/**
+	 * Get the account balance
+	 * @return the account balance
+	 */
 	public java.math.BigDecimal getSolde() {
 		return solde;
 	}
+	/**
+	 * Get the account old balance
+	 * @return the account old balance
+	 */
 	public java.math.BigDecimal getAncienSolde() {
 		return ancienSolde;
 	}
+	
+	/**
+	 * Get the account new balance
+	 * @return the account new balance
+	 */
 	public java.math.BigDecimal getNouveauSolde() {
 		return nouveauSolde;
 	}
+	
+	/**
+	 * Get the registered value
+	 * @return the registered value
+	 */
 	public String getValeur() {
 		return valeur.setScale(2, RoundingMode.FLOOR).toString();
 	}
+	
+	/**
+	 * Set the given value as the registered value
+	 * @param valeur
+	 */
 	public void setValeur(String valeur) {
 		this.valeur = new BigDecimal(valeur);
 	}
+	
+	/**
+	 * Get the registered integer value
+	 * @return the registered integer value
+	 */
 	public String getValeurEntiere() {
 		return valeurEntiere;
 	}
+	
+	/**
+	 * Set the given integer value as the registered integer value
+	 * @param valeurEntiere
+	 */
 	public void setValeurEntiere(String valeurEntiere) {
 		if(valeurEntiere == null) {
 			this.valeurEntiere = "";
@@ -86,9 +130,19 @@ public class BOperations {
 			this.valeurEntiere = valeurEntiere;
 		}
 	}
+	
+	/**
+	 * Get the registered decimal value
+	 * @return
+	 */
 	public String getValeurDecimale() {
 		return valeurDecimale;
 	}
+	
+	/**
+	 * Set the given decimal value as the registered decimal value
+	 * @param valeurDecimale
+	 */
 	public void setValeurDecimale(String valeurDecimale) {
 		if(valeurDecimale == null) {
 			this.valeurDecimale = "";
@@ -96,32 +150,61 @@ public class BOperations {
 			this.valeurDecimale = valeurDecimale;
 		}
 	}
+	
+	/**
+	 * Get the registered operation
+	 * @return the registered operation
+	 */
 	public String getOp() {
 		return op;
 	}
+	
+	/**
+	 * Set the given operation as the operation registered
+	 * @param op
+	 */
 	public void setOp(String op) {
 		this.op = op;
 	}
+	/**
+	 * Get the minimal date
+	 * @return the minimal date
+	 */
 	public String getDateInf() {
 		return dateInf;
 	}
+	/**
+	 * Set the minimal date given as the minimal date registered
+	 * @param dateInf
+	 */
 	public void setDateInf(String dateInf) {
 		this.dateInf = dateInf;
 	}
+	/**
+	 * Get the maximal date registered
+	 * @return the maximal date
+	 */
 	public String getDateSup() {
 		return dateSup;
 	}
+	/**
+	 * Set the given maximal date as the maximal date registered
+	 * @param dateSup
+	 */
 	public void setDateSup(String dateSup) {
 		this.dateSup = dateSup;
 	}
+	/**
+	 * Get the list of operations processed between the minimal and the maximal date registered
+	 * @return the list of operations
+	 */
 	public ArrayList<String> getOperationsParDates() {
 		return operationsParDates;
 	}
 	
-	/*
-	 * 
-	 * 			Connexion
-	 * 
+	/**
+	 * Open the connection with the database
+	 * @throws TraitementException
 	 */
 	public void ouvrirConnexion() throws TraitementException {
 		String name = "localhost";
@@ -138,6 +221,11 @@ public class BOperations {
 			throw new TraitementException("21");
 		}
 	}
+	
+	/**
+	 * Open the connection with the database according to the given datasource
+	 * @throws TraitementException
+	 */
 	public void ouvrirConnexion(DataSource ds) throws TraitementException {
 		if(ds == null) {
 			throw new TraitementException("21");
@@ -151,6 +239,10 @@ public class BOperations {
 			throw new TraitementException("21");
 		}
 	}
+	/**
+	 * Close the connection with the database
+	 * @throws TraitementException
+	 */
 	public void fermerConnexion() throws TraitementException {
 		try {
 			connection.close();
@@ -161,10 +253,9 @@ public class BOperations {
 		}
 	}
 	
-	/*
-	 * 
-	 * 			Méthodes
-	 * 
+	/**
+	 * Consult the account associated to the registered account number
+	 * @throws TraitementException
 	 */
 	public void consulter() throws TraitementException {
 		Objects.requireNonNull(connection);
@@ -185,6 +276,10 @@ public class BOperations {
 		}
 	}
 	
+	/**
+	 * Compute the operation registered on the account associated to the registered account number
+	 * @throws TraitementException
+	 */
 	public void traiter() throws TraitementException {
 		Objects.requireNonNull(connection);
 		Objects.requireNonNull(noCompte);
@@ -244,6 +339,11 @@ public class BOperations {
 		}
 	}
 	
+	/**
+	 * Fill the operationsParDates list with all the operations made between
+	 * the minimal date registered and the maximal date registered
+	 * @throws TraitementException
+	 */
 	public void listerParDates() throws TraitementException {
 		Objects.requireNonNull(connection);
 		Objects.requireNonNull(noCompte);

@@ -3,6 +3,10 @@ package gestionErreurs;
 import java.util.HashMap;
 
 public class MessagesDErreurs {
+	
+	/**
+	 * Map associating a number to an error message
+	 */
 	private static HashMap<String, String> message = new HashMap<>(){{
 		put("3", "Problème pour accéder à ce compte client, vérifiez qu'il est bien valide");
 		put("4", "Le N° de compte doit être numérique");
@@ -16,6 +20,11 @@ public class MessagesDErreurs {
 		put("32", "Il n'y a eu aucune opération effectuée durant cette période");
 	}};
 	
+	/**
+	 * Get the error message associated to the given number
+	 * @param numeroMessage
+	 * @return the error message
+	 */
 	public static String getMessageDerreur(String numeroMessage) {
 		return message.get(numeroMessage);
 	}

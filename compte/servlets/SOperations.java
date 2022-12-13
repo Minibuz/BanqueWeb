@@ -33,6 +33,9 @@ public class SOperations extends HttpServlet {
         super();
     }
 
+    /**
+     * Initialise the datasource
+     */
     public void init() {
     	try {
 			Context initContext = new InitialContext();
@@ -52,6 +55,7 @@ public class SOperations extends HttpServlet {
 	}
 
 	/**
+	 * Get the request and the response given and process the event given according to datas inside
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -193,6 +197,11 @@ public class SOperations extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Check if the account number respects the project standards
+	 * @param noCompte
+	 * @throws TraitementException
+	 */
 	private void verifNoDeCompte(String noCompte) throws TraitementException {
 		if(!noCompte.matches("[0-9]*")) {
 			throw new TraitementException("4");
@@ -202,6 +211,11 @@ public class SOperations extends HttpServlet {
 		}
 	}
 	
+	/**
+	 * Check if the value given respects the projects standards
+	 * @param valeur
+	 * @throws TraitementException
+	 */
 	private void verifValeur(String valeur) throws TraitementException {
 		if(".".equals(valeur)) {
 			throw new TraitementException("26");
@@ -213,6 +227,16 @@ public class SOperations extends HttpServlet {
 		}	
 	}
 	
+	/**
+	 * Check if the values given can generate a date respecting the project standards
+	 * @param aInit
+	 * @param mInit
+	 * @param jInit
+	 * @param aFinal
+	 * @param mFinal
+	 * @param jFinal
+	 * @throws TraitementException
+	 */
 	private void verifDate(String aInit, String mInit, String jInit, String aFinal, String mFinal, String jFinal) throws TraitementException {
 		if(Integer.parseInt(aFinal) < Integer.parseInt(aInit)) {
 			throw new TraitementException("31");

@@ -165,7 +165,7 @@ table, td, th {
     						<% } else { %>
     							<option value=<%= i %>><%= i %></option>
     						<% } %>
-    					<% } %>
+    					<% } %>	
     					</select>
     				</td>
     				<td>
