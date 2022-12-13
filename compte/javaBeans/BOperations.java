@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
+import javax.sql.DataSource;
+
 import gestionErreurs.TraitementException;
 
 public class BOperations {
@@ -130,6 +132,19 @@ public class BOperations {
 			connection = DriverManager.getConnection(
 					"jdbc:mysql://"+name+":"+port+"/"+bddName,
 					"root", "root");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new TraitementException("21");
+		}
+	}
+	public void ouvrirConnexion(DataSource ds) throws TraitementException {
+		if(ds == null) {
+			throw new TraitementException("21");
+		}
+		
+		try {
+			connection = ds.getConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -8,16 +8,23 @@ import javaBeans.BOperations;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Enumeration;
 
-import gestionErreurs.MessagesDErreurs;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import javax.sql.DataSource;
+
 import gestionErreurs.TraitementException;
 
 /**
  * Servlet implementation class SOperations
  */
 public class SOperations extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
+	
+	private DataSource dataSource = null;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -26,6 +33,17 @@ public class SOperations extends HttpServlet {
         super();
     }
 
+    public void init() {
+    	try {
+			Context initContext = new InitialContext();
+			Context envContext = (Context)initContext.lookup("java:/comp/env");
+			dataSource = (DataSource)envContext.lookup("jdbc/Banque");
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+    }
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -56,7 +74,7 @@ public class SOperations extends HttpServlet {
 				verifNoDeCompte(noCompte);
 				
 				BOperations operation = new BOperations();
-				operation.ouvrirConnexion();
+				operation.ouvrirConnexion(dataSource);
 				operation.setNoDeCompte(noCompte);
 				operation.consulter();
 				
@@ -84,7 +102,7 @@ public class SOperations extends HttpServlet {
 				verifValeur(valEnt + "." + valDec);
 				
 				BOperations operation = (BOperations) request.getSession().getAttribute("BOperation");
-				operation.ouvrirConnexion();
+				operation.ouvrirConnexion(dataSource);
 				
 				operation.setOp(op);
 				operation.setValeurEntiere(valEnt);
@@ -129,7 +147,7 @@ public class SOperations extends HttpServlet {
 			try {
 			
 				BOperations operation = (BOperations) request.getSession().getAttribute("BOperation");
-				operation.ouvrirConnexion();
+				operation.ouvrirConnexion(dataSource);
 				
 				String dateInit = aInit + "/" + mInit + "/" + jInit;
 				String dateFinal = aFinal + "/" + mFinal + "/" + jFinal;

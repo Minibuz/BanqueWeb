@@ -49,4 +49,9 @@
     <servlet-name>ListOperations</servlet-name>
     <url-pattern>/ListOperations</url-pattern>
   </servlet-mapping>
+  <resource-ref>
+  	<res-ref-name>jdbc/Banque</res-ref-name>
+  	<res-type>javax.sql.DataSource</res-type>
+  	<res-auth>Container</res-auth>
+  </resource-ref>
 </web-app>
