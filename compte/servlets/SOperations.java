@@ -37,14 +37,7 @@ public class SOperations extends HttpServlet {
      * Initialise the datasource
      */
     public void init() {
-    	try {
-			Context initContext = new InitialContext();
-			Context envContext = (Context)initContext.lookup("java:/comp/env");
-			dataSource = (DataSource)envContext.lookup("jdbc/Banque");
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
+    	dataSource = (DataSource) getServletContext().getAttribute("dataSource");
     }
     
 	/**
