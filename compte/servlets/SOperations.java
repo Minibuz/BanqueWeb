@@ -191,7 +191,7 @@ public class SOperations extends HttpServlet {
 	}
 
 	/**
-	 * Check if the account number respects the project standards
+	 * Check if the account number respects the project standards (4 numbers between 0 and 9)
 	 * @param noCompte
 	 * @throws TraitementException
 	 */
@@ -205,7 +205,7 @@ public class SOperations extends HttpServlet {
 	}
 	
 	/**
-	 * Check if the value given respects the projects standards
+	 * Check if the value given respects the projects standards (a numeric value not null)
 	 * @param valeur
 	 * @throws TraitementException
 	 */
@@ -221,7 +221,7 @@ public class SOperations extends HttpServlet {
 	}
 	
 	/**
-	 * Check if the values given can generate a date respecting the project standards
+	 * Check if the values given can generate a date respecting the project standards (date format)
 	 * @param aInit
 	 * @param mInit
 	 * @param jInit
